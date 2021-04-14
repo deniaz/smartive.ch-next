@@ -90,9 +90,20 @@ const Speedboat: NextPage<Props> = ({ contact, packages, teasers }) => {
     </Page>
   );
 };
+import { Directus } from '@directus/sdk';
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
+  const directus = new Directus('https://demo-o3v1ab.directus.app');
+
+  await directus.auth.login({
+    email: 'robert@smartive.ch',
+    password: 'yaw3NERK!solk.yeep',
+  });
+
+  const paeckli = await directus.items('paeckli').readOne(2);
   const packages = [Packages.mentoring, Packages['scale-up']];
+
+  console.info(paeckli);
 
   return {
     props: {
